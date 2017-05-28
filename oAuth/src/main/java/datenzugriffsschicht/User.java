@@ -2,8 +2,11 @@ package datenzugriffsschicht;
 
 import java.util.ArrayList;
 
-import datenzugriffsschicht.UserGroup;
-
+/**
+ * Represents an user in the system.
+ * @author Altvatter Robert, Groﬂbeck Thomas
+ *
+ */
 public class User {
     private String name;
     private String password;
@@ -12,9 +15,23 @@ public class User {
     private String email;
     private UserGroup group;
     private ArrayList<Token> myTokens;
-    User(){
+    
+    /**
+     * Default constructor.
+     */
+    User() {
         
     }
+    
+    /**
+     * constructs an user.
+     * @param name of the user
+     * @param password of the user
+     * @param id of the user
+     * @param active true if the user is activated
+     * @param email from the user
+     * @param group usergroup from the user
+     */
     public User(String name, String password, int id, boolean active, String email, UserGroup group) {
         this.name = name;
         this.password = password;
@@ -96,6 +113,5 @@ public class User {
     public void setGroup(UserGroup group) {
         this.group = group;
     }
-    
-    
+        
 }

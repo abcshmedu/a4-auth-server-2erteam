@@ -9,8 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.json.JSONObject;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,52 +16,93 @@ import datenzugriffsschicht.User;
 import geschaeftslogik.UserService;
 import geschaeftslogik.UserServiceImpl;
 
+/**
+ * The class UserResource hands off JSON Objects to the service for authentification.
+ * @author Altvatter Robert, Groﬂbeck Thomas
+ *
+ */
 @Path("/users")
 public class UserResource {
     
     private final UserService userService;
     
-    public UserResource(){
+    /**
+     * constructs a user resource.
+     */
+    public UserResource() {
         userService = new UserServiceImpl();
     }
     
-    public UserResource(UserService us){
+    /**
+     * constructs a user resource.
+     * @param us user resource
+     */
+    public UserResource(UserService us) {
         this.userService = us;
     }
     
+    /**
+     * Creates a token for the user.
+     * @param user who wants a token
+     * @param pwd for mthe user
+     * @return service response
+     */
     @POST
     @Path("/authenticate/{user}{pwd}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createToken(@PathParam("user")String user,@PathParam("pwd")String pwd){
-        
+    public Response createToken(@PathParam("user")String user, @PathParam("pwd")String pwd) {
         return Response.status(Response.Status.OK)
-                .entity(objToJson(userService.createToken(user, pwd)))
-                .build();
+        .entity(objToJson(userService.createToken(user, pwd)))
+        .build();
     }
+    
+    /**
+     * Lists all users.
+     * @return service response
+     */
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listUsers(){
+    public Response listUsers() {
         return null;
     }
+    
+    /**
+     * returns one specific user.
+     * @param id from the user
+     * @return service response
+     */
     @GET
     @Path("/{id}") // get
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@PathParam("id") String id){
+    public Response getUser(@PathParam("id") String id) {
         return null;
     }
+    
+    /**
+     * Updates a user.
+     * @param id from the user
+     * @param user user
+     * @return service response
+     */
     @PUT
     @Path("/{id}") // put
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateUser(@PathParam("id") String id, User us){
+    public Response updateUser(@PathParam("id") String id, User user) {
         return null;
     }
+    
+    /**
+     * checks if a token is validated.
+     * @param token to check
+     * @return service response
+     */
     @GET
     @Path("/{token}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response validateToken(@PathParam("token") String token){
+    public Response validateToken(@PathParam("token") String token) {
         return null;
     }
     /**
@@ -81,7 +120,6 @@ public class UserResource {
             e.printStackTrace();
         }
         return result;
-    }
-    
+    }   
     
 }
