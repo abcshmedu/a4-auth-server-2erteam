@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
     public enum TokenResult {
         OK(Response.Status.OK.getStatusCode(), "successful"),
         INVALID(Response.Status.BAD_REQUEST.getStatusCode(), "Ungültiges Token"),
-        CONFLICT(Response.Status.CONFLICT.getStatusCode(),"Token abgelaufen");
+        CONFLICT(Response.Status.CONFLICT.getStatusCode(), "Token abgelaufen");
         private String status;
         private int code;
         

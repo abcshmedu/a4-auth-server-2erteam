@@ -48,7 +48,7 @@ public class UserResource {
      * @return service response
      */
     @POST
-    @Path("/authenticate/{user}{pwd}")
+    @Path("/authenticate/{user}/{pwd}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createToken(@PathParam("user")String user, @PathParam("pwd")String pwd) {
