@@ -65,7 +65,9 @@ public class UserResource {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listUsers() {
-        return null;
+        return Response.status(Response.Status.OK)
+        .entity(objToJson(userService.getUsers()))
+        .build();
     }
     
     /**
@@ -77,7 +79,9 @@ public class UserResource {
     @Path("/{id}") // get
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("id") String id) {
-        return null;
+        return Response.status(Response.Status.OK)
+                .entity(objToJson(userService.getUser(Integer.parseInt(id))))
+                .build();
     }
     
     /**
@@ -91,7 +95,9 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUser(@PathParam("id") String id, User user) {
-        return null;
+        return Response.status(Response.Status.OK)
+                .entity(objToJson(userService.updateUser(Integer.parseInt(id), user)))
+                .build();
     }
     
     /**
@@ -103,7 +109,9 @@ public class UserResource {
     @Path("/{token}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response validateToken(@PathParam("token") String token) {
-        return null;
+        return Response.status(Response.Status.OK)
+                .entity(objToJson(userService.validateToken(token)))
+                .build();
     }
     /**
      * Converts a java object to JSON.

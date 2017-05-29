@@ -1,6 +1,7 @@
 package geschaeftslogik;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -33,14 +34,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User u) {
+    public User updateUser(int id, User u) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public User getUser(int id) {
-        // TODO Auto-generated method stub
+        for (User u : users) {
+            if (u.getId() == id) {
+                return u;
+            }
+        }
         return null;
     }
     
@@ -61,16 +66,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User[] getUsers() {
-        // TODO Auto-generated method stub
-        return null;
+        User[] array = new User[users.size()];
+        users.toArray(array);
+        return array;
     }
     
-    /**
-     * Creates a new token.
-     * @param user user who needs a token
-     * @param pwd from the user
-     * @return Token new token
-     */
+    @Override
     public Token createToken(String user, String pwd) {
         User u = authenticateUser(user, pwd);
         if (u == null) {
@@ -91,18 +92,21 @@ public class UserServiceImpl implements UserService {
         }
     }
     
-    /**
-     * Checks if a token is validated.
-     * @param token to check
-     * @return the user who owns the token else null
-     */
-    public User validateToken(Token token) {
-        //todo: Prüfung auf gültigkeit (nicht abgelaufen)
-        if (tokenUserMap.containsKey(token)) {
-            return tokenUserMap.get(token);
-        } else {
-            return null;
+    @Override
+    public User validateToken(String token) {      
+        Date now = new Date();
+        for (Entry<Token, User> e: tokenUserMap.entrySet()) {
+            if (e.getKey().getToken().equals(token) && now.before(e.getKey().getDate())) {
+                //todo: Prüfung auf gültigkeit (nicht abgelaufen)
+                return tokenUserMap.get(e.getKey());
+            }
         }
+        return null;       
+//        if (tokenUserMap.containsKey(token)) {
+//            return tokenUserMap.get(token);
+//        } else {
+//            return null;
+//        }
     }
 
 }
