@@ -84,21 +84,6 @@ public class UserResource {
                 .build();
     }
     
-    /**
-     * Updates a user.
-     * @param id from the user
-     * @param user user
-     * @return service response
-     */
-    @PUT
-    @Path("/{id}") // put
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateUser(@PathParam("id") String id, User user) {
-        return Response.status(Response.Status.OK)
-                .entity(objToJson(userService.updateUser(Integer.parseInt(id), user)))
-                .build();
-    }
     
     /**
      * checks if a token is validated.

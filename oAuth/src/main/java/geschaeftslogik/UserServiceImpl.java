@@ -33,11 +33,6 @@ public class UserServiceImpl implements UserService {
         nextToken = 0;
     }
 
-    @Override
-    public User updateUser(int id, User u) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     @Override
     public User getUser(int id) {
@@ -72,41 +67,38 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public Token createToken(String user, String pwd) {
+    public TokenResult createToken(String user, String pwd) {
         User u = authenticateUser(user, pwd);
         if (u == null) {
-            return null;
+            return TokenResult.INVALID;
         }
         if (tokenUserMap.containsValue(u)) {
             for (Entry<Token, User> e:tokenUserMap.entrySet()) {
                 if (e.getValue().equals(u)) {
-                    return e.getKey();
+                    return TokenResult.OK;
                 }
             }
-            return null;
+            return TokenResult.INVALID;
         } else {
             Token help = new Token(nextToken);
             nextToken++;
             tokenUserMap.put(help, u);
-            return help;
+            return TokenResult.OK;
         }
     }
     
     @Override
-    public User validateToken(String token) {      
+    public TokenResult validateToken(String token) {      
         Date now = new Date();
         for (Entry<Token, User> e: tokenUserMap.entrySet()) {
             if (e.getKey().getToken().equals(token) && now.before(e.getKey().getDate())) {
                 //todo: Prüfung auf gültigkeit (nicht abgelaufen)
-                return tokenUserMap.get(e.getKey());
+                return TokenResult.OK;
+            }else if(e.getKey().getToken().equals(token) && !now.before(e.getKey().getDate())){
+                return TokenResult.CONFLICT;
             }
         }
-        return null;       
-//        if (tokenUserMap.containsKey(token)) {
-//            return tokenUserMap.get(token);
-//        } else {
-//            return null;
-//        }
+        return TokenResult.INVALID;       
     }
 
 }

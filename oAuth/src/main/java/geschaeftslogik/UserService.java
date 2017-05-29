@@ -10,13 +10,6 @@ import datenzugriffsschicht.User;
  */
 public interface UserService {
 
-    /**
-     * Updates an user.
-     * @param id from the user
-     * @param u user
-     * @return the updated user
-     */
-    User updateUser(int id, User u);
     
     /**
      * Returns one specific user.
@@ -45,12 +38,12 @@ public interface UserService {
      * @param pwd from the user
      * @return a new token
      */
-    Token createToken(String user, String pwd);
+    TokenResult createToken(String user, String pwd);
     
     /**
      * Checks if a token is validated.
      * @param token to check
      * @return the user who owns the token else null
      */
-    User validateToken(String token);
+    TokenResult validateToken(String token);
 }
